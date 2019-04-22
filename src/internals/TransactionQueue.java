@@ -13,6 +13,19 @@ public class TransactionQueue<T> implements IQueue<T> {
 		this.size = 0;
 	}
 
+	/**
+	 * Return the element at the index
+	 * @param index Index from which the element will be returned
+	 * @return Node at the index
+	 */
+	private Node<T> getNodeAt(int index) {
+		Node<T> traversingNode = frontNode;
+		for (int i = 1; i <= index; i++) {
+			traversingNode = traversingNode.getNextNode();
+		}
+		return traversingNode;
+	}
+	
 	@Override
 	public boolean enqueue(T newElement) {
 		if (this.size == 0) {
@@ -51,14 +64,19 @@ public class TransactionQueue<T> implements IQueue<T> {
 
 	@Override
 	public T[] toArray() {
-		T[] transferArray = (T[]) new Object[this.size]; //INCOMPLETE
-		return null;
+		@SuppressWarnings("unchecked")
+		T[] transferArray = (T[]) new Object[this.size];
+		Node<T> traversingNode = null;
+		for (int i = 0; i < this.size; i++) {
+			traversingNode = getNodeAt(i);
+			transferArray[i] = traversingNode.getElement();
+		}
+		return transferArray;
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 }
