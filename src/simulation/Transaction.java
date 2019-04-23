@@ -1,16 +1,15 @@
 package simulation;
 
-//TODO 
-
 public class Transaction {
 	private int id; // unique id in [1,1000]
 	private ICustomer customer; // the request owner
 	private int occupation; // needed time for transaction
 	private int waiting; // needed time for previous transactions
 	private Transaction next;
-	
+
 	/**
 	 * Creates a transaction node with next transaction
+	 * 
 	 * @param id
 	 * @param customer
 	 * @param occupation
@@ -25,22 +24,23 @@ public class Transaction {
 		this.waiting = waiting;
 		this.next = next;
 	}
-	
+
 	/**
 	 * Creates a terminal transaction node
+	 * 
 	 * @param id
 	 * @param customer
 	 * @param occupation
 	 * @param waiting
 	 */
-	public Transaction(int id, ICustomer customer, int occupation, int waiting){
+	public Transaction(int id, ICustomer customer, int occupation, int waiting) {
 		this(id, customer, occupation, waiting, null);
 	}
-	
+
 	/**
 	 * Creates an empty Transaction node
 	 */
-	public Transaction(){
+	public Transaction() {
 		this(-1, null, -1, -1, null);
 	}
 
