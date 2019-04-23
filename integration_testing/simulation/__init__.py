@@ -1,1 +1,1 @@
-__all__ = ["simulation_classes", "simulation_os", "simulation_parts"]
+__all__ = ["simulation_classes", "simulation_os", "simulation_parts", "simulation_parser"]

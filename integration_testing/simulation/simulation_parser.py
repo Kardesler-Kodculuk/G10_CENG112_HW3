@@ -104,7 +104,7 @@ class Parser:
                                                          Parser.return_highest_date(day))
 
     @property
-    def return_output(self) -> Tuple[List, Dict]:
+    def output(self) -> Tuple[List, Dict]:
         """
         Output
         :return: the transaction queues and days parsed.
