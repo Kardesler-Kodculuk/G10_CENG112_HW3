@@ -1,8 +1,8 @@
 package simulation;
 
 public class NonRegistered implements ICustomer {
-	private static String type = "Customer";
-	private static int priority = 1;
+	private static String type = "Non-Registered";
+	private static int priority = 3;
 	private boolean initilised;
 	
 	public NonRegistered() {
@@ -19,4 +19,10 @@ public class NonRegistered implements ICustomer {
 		// TODO Auto-generated method stub
 		return priority;
 	}
+	
+	@Override
+	public String toString() {
+		return (getType() + " | " + ((Integer) getPriority()).toString());
+	}
+
 }

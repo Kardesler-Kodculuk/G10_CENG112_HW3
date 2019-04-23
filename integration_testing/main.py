@@ -25,6 +25,7 @@ class Main:
         self.transactions: List[TransactionQueue] = load_transactions(self.file_name)
 
     def test(self):
+        
         NotImplemented
 
 

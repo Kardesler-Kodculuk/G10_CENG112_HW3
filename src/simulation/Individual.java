@@ -1,8 +1,8 @@
 package simulation;
 
 public class Individual implements ICustomer {
-	private static String type = "Customer";
-	private static int priority = 1;
+	private static String type = "Individual";
+	private static int priority = 2;
 	private boolean initilised;
 	
 	public Individual() {
@@ -19,4 +19,10 @@ public class Individual implements ICustomer {
 		// TODO Auto-generated method stub
 		return priority;
 	}
+	
+	@Override
+	public String toString() {
+		return (getType() + " | " + ((Integer) getPriority()).toString());
+	}
+
 }

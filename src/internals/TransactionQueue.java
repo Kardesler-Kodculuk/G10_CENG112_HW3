@@ -77,6 +77,7 @@ public class TransactionQueue implements ITransactionQueue {
 				}
 			}
 		}
+		insert(T, insertAt);
 	}
 
 	@Override
