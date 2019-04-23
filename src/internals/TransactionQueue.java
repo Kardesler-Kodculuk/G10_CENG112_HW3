@@ -1,82 +1,136 @@
 package internals;
 
-public class TransactionQueue<T> implements IQueue<T> {
+import simulation.ICustomer;
+import simulation.Transaction;
 
-	private Node<T> backNode;
-	private Node<T> frontNode;
-	private int size;
+public class TransactionQueue implements ITransactionQueue {
 
-	
-	public TransactionQueue() {
-		this.frontNode = new Node<T>();
-		this.backNode = this.frontNode;
-		this.size = 0;
+	private Transaction head;
+	private int queueLength;
+	private int totalWaitingTime;
+	private String date;
+	private TransactionQueue next;
+
+	public TransactionQueue(String date) {
+		head = null;
+		queueLength = 0;
+		totalWaitingTime = 0;
+		this.date = date;
+		next = null;
 	}
 
 	/**
-	 * Return the element at the index
-	 * @param index Index from which the element will be returned
-	 * @return Node at the index
+	 * Return the transaction object at a certain index.
+	 * @param index
+	 * @return Transaction if it exists, null, otherwise.
 	 */
-	private Node<T> getNodeAt(int index) {
-		Node<T> traversingNode = frontNode;
-		for (int i = 1; i <= index; i++) {
-			traversingNode = traversingNode.getNextNode();
+	private Transaction getElementAt(int index) {
+		if (index >= this.queueLength) {
+			return null;
+		} else {
+			Transaction traversingTransaction = head;
+			for (int i = 0; i < index; i++) {
+				traversingTransaction = traversingTransaction.getNext();
+			}
+			return traversingTransaction;
 		}
-		return traversingNode;
 	}
-	
-	@Override
-	public boolean enqueue(T newElement) {
-		if (this.size == 0) {
-			this.frontNode.setElement(newElement);
-			this.size++;
+
+	/**
+	 * Insert a new element into a given index
+	 * @param T Element to be inserted
+	 * @param index Index to insert at.
+	 */
+	private void insert(Transaction T, int index) {
+		if (index == 0) {
+			T.setNext(head);
+			this.head = T;
+		} else {
+			Transaction priorElement = getElementAt(index - 1);
+			Transaction postElement = getElementAt(index + 1);
+			head.setNext(postElement);
+			priorElement.setNext(T);
 		}
-		Node<T> newNode = new Node(newElement);
-		backNode.setNextNode(newNode);
-		this.backNode = newNode;
-		this.size++;
-		return true;
+		this.totalWaitingTime += T.getWaiting();
 	}
 
 	@Override
-	public T dequeue() {
-		Node<T> nextNode = frontNode.getNextNode();
-		T element = frontNode.getElement();
-		this.frontNode = nextNode;
-		this.size--;
-		return element;
+	public void insert(Transaction T) {
+		int insertAt;
+		ICustomer ThisCustomer = T.getCustomer();
+		int ThisPriority = ThisCustomer.getPriority();
+		if (head == null) {
+			insertAt = 0;
+		} else {
+			insertAt = 0;
+			for (int i = 0; i <= this.queueLength; i++) {
+				Transaction nextTransaction = getElementAt(i + 1);
+				if (nextTransaction == null) {
+					insertAt = i;
+					break;
+				} else {
+					ICustomer nextCustomer = nextTransaction.getCustomer();
+					if (nextCustomer.getPriority() > ThisPriority) {
+						insertAt = i;
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	@Override
-	public T peek() {
-		T element = frontNode.getElement();
-		return element;
+	public Transaction remove() {
+		if (head != null) {
+			Transaction removedTransaction = this.head;
+			this.head = getElementAt(1);
+			this.queueLength--;
+			removedTransaction.setNext(null);
+			return removedTransaction;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return (this.queueLength == 0);
 	}
 
 	@Override
 	public boolean clear() {
-		this.backNode = null;
-		this.frontNode = null;
-		this.size = 0;
+		this.head = null;
+		this.queueLength = 0;
 		return true;
 	}
 
 	@Override
-	public T[] toArray() {
-		@SuppressWarnings("unchecked")
-		T[] transferArray = (T[]) new Object[this.size];
-		Node<T> traversingNode = null;
-		for (int i = 0; i < this.size; i++) {
-			traversingNode = getNodeAt(i);
-			transferArray[i] = traversingNode.getElement();
-		}
-		return transferArray;
+	public ITransactionQueue getNextTransactionQueue() {
+		return this.next;
+	}
+
+	@Override
+	public void setNextTransactionQueue(ITransactionQueue next) {
+		this.next = (TransactionQueue) next;
+	}
+
+	@Override
+	public int getTotalWaitingTime() {
+		return this.totalWaitingTime;
 	}
 
 	@Override
 	public int getSize() {
-		return size;
+		return this.queueLength;
+	}
+
+	@Override
+	public String getDate() {
+		return date;
+	}
+
+	@Override
+	public void setDate(String Date) {
+		this.date = Date;
 	}
 
 }
