@@ -6,8 +6,15 @@ from typing import List
 
 
 class Transaction:
-    def __init__(self, id: int, type: int, occupation: int):
+    def __init__(self, id: int, type: int, occupation: int, waiting_time: int = 0):
+        type_converter = {
+            "COR": "Corporate",
+            "IND": "Individual",
+            "NON": "Non-Registered"
+        }
         self.type = type
+        if self.type in type_converter:
+            self.type = type_converter[self.type]
         self.occupation = occupation
         self.id = id
         priority_determinator = {
@@ -16,6 +23,19 @@ class Transaction:
             "Non-Registered": 3
         }
         self.priority: int = priority_determinator[type]
+        self.waiting_time = waiting_time
+
+    def __eq__(self, other):
+        if self.type != other.type:
+            return False
+        elif self.occupation != other.occupation:
+            return False
+        elif self.id != other.id:
+            return False
+        elif self.waiting_time != other.waiting_time:
+            return False
+        else:
+            return True
 
 
 class TransactionQueue:
@@ -59,4 +79,15 @@ class TransactionQueue:
         :return: Next transaction to be processed.
         """
         return self.queue.pop(0)
+
+    def __eq__(self, other) -> bool:
+        if type(self) != type(other):
+            return False
+        elif len(self.queue) != len(self.other):
+            return False
+        else:
+            for self_item, other_item in self.queue, other.queue:
+                if self_item != other_item:
+                    return False
+        return True
 
