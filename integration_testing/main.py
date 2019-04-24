@@ -1,5 +1,5 @@
 from typing import List, Dict, Tuple
-from simulation.simulation_os import position_test_files, execute_java_code
+from simulation.simulation_os import position_test_files, execute_java_code, delete_file
 from simulation.simulation_parts import load_transactions
 from simulation.simulation_classes import Transaction, TransactionQueue
 from simulation.simulation_parser import Parser
@@ -72,6 +72,16 @@ class Main:
         self.parse_results()
         self.initialise_stats()
 
+    @staticmethod
+    def finalise(files: List[str]) -> None:
+        """
+        Remove the files from the file system that was generated during testing.
+        :param files: Names of the files to be removed
+        :return: None
+        """
+        for file in files:
+            delete_file(file)
+
     def test_queue_equality(self) -> int:
         """
         Test if queue inside the program and reported queues are the same
@@ -105,7 +115,7 @@ class Main:
 
         for date in self.stats:
             if self.stats[date] != self.parsed_output[1][date]:
-                return f"Test Unsucessful, Error Occured at date {date}"
+                return f"Test unsuccessful, error occurred at date {date}"
 
         return "Test Successful"
 
@@ -113,4 +123,5 @@ class Main:
 if __name__ == "__main__":
     tester = Main("CENG112_HW3_Transactions.txt")
     result = tester.test()
+    Main.finalise(["CENG112_HW3_Transactions.txt", "output.txt"])
     print(result)

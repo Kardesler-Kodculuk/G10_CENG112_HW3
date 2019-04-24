@@ -2,9 +2,17 @@
 A group of functions that will ready the operating system to do the testing.
 """
 
-from os import system
+from os import system, remove
 from platform import system as systemname
 
+
+def delete_file(file_name: str) -> None:
+    """
+    Remove the file
+    :param file_name: Name of the file to be removed
+    :return: None
+    """
+    remove(file_name)
 
 def position_test_files(file_name: str) -> None:
     """
