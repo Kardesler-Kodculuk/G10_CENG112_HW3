@@ -15,6 +15,8 @@ class Transaction:
         self.type = type
         if self.type in type_converter:
             self.type = type_converter[self.type]
+        else:
+            self.type = type.title()
         self.occupation = occupation
         self.id = id
         priority_determinator = {
@@ -22,7 +24,7 @@ class Transaction:
             "Individual": 2,
             "Non-Registered": 3
         }
-        self.priority: int = priority_determinator[type]
+        self.priority: int = priority_determinator[self.type]
         self.waiting_time = waiting_time
 
     def __eq__(self, other):

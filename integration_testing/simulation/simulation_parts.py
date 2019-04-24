@@ -47,8 +47,10 @@ def parse_transactions(days: Dict[str, List[Tuple[int, str, int]]]) -> Dict[str,
         days_transaction[day] = []
         waiting_time = 0
         for i, transaction in enumerate(days[day]):
-            days_transaction[day].append(Transaction(transaction[0], transaction[1], transaction[2], waiting_time))
-            waiting_time += transaction[2]
+            if transaction:
+                days_transaction[day].append(Transaction(int(transaction[0]),
+                                                         transaction[1], int(transaction[2]), int(waiting_time)))
+                waiting_time += int(transaction[2])
     return days_transaction
 
 

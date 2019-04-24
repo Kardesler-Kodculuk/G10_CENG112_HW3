@@ -13,7 +13,7 @@ class Parser:
             self.data = file.read()
         self.transaction_queue_log: List[str] = []
         self.days: List[str] = []
-        self.days_parsed: Dict[str, Tuple[Dict, str]] = {}
+        self.days_parsed: Dict[str, Dict] = {}
         self.transaction_queues: List[TransactionQueue] = []
 
     @staticmethod
@@ -27,26 +27,28 @@ class Parser:
         return keywords[1]
 
     @staticmethod
-    def parse_times(second_part_report: str) -> Dict[str, Tuple[float, float, float]]:
+    def parse_times(second_part_report: str) -> Dict[str, Dict[str, float]]:
         """
         Return the transaction counts, waiting times and average waiting times of total, customer etc.
         :param second_part_report: Second part of the daily report
         :return: Dictionary containing these values.
         """
-        dictionary_times = {
-            "Total": (),
-            "Corporate": (),
-            "Individual": (),
-            "Non-Registered": ()
+        inner_template = {"Transaction Counts": 0,
+                          "Total Waiting Time": 0,
+                          "Average Waiting Time": 0
         }
+        dictionary_times = {
+            "General": inner_template.copy(),
+            "Corporate": inner_template.copy(),
+            "Individual": inner_template.copy(),
+            "Non-Registered": inner_template.copy()}
         lines = second_part_report.splitlines()
-        dictionary_keys = ["Total", "Corporate", "Individual", "Non-Registered"]
+        dictionary_keys = ["General", "Corporate", "Individual", "Non-Registered"]
         for i, j in range(0, 13, 3), range(0, 4):
-            dictionary_times[dictionary_keys[j]] = (
-                float(Parser.return_arrow_value(lines[i])),
-                float(Parser.return_arrow_value(lines[i + 1])),
-                float(Parser.return_arrow_value(lines[i + 2]))
-            )
+            dictionary_times[dictionary_keys[j]]["Transaction Counts"] = float(Parser.return_arrow_value(lines[i]))
+            dictionary_times[dictionary_keys[j]]["Total Waiting Time"] = float(Parser.return_arrow_value(lines[i + 1]))
+            dictionary_times[dictionary_keys[j]]["Average Waiting Time"] = float(
+                                                                            Parser.return_arrow_value(lines[i + 2]))
         return dictionary_times
 
     @staticmethod
@@ -73,6 +75,7 @@ class Parser:
         """
         Convert a list of transaction infos into a transaction queue.
         :param transactions: Transactions list
+        :param date: Date of the day.
         :return: TransactionQueue
         """
         transactions_list: List[Transaction] = []
@@ -87,7 +90,7 @@ class Parser:
         :return: None.
         """
         blocs: List[str] = self.data.split("\n\n")
-        self.transaction_queue_log = blocs[0].splitlines
+        self.transaction_queue_log = blocs[0].splitlines()
         self.days = blocs[1:]
 
     def parse_report(self) -> None:
@@ -100,8 +103,7 @@ class Parser:
             day, transactions = transaction_split[0], transaction_split[1:]
             self.transaction_queues.append(Parser.convert_into_transaction_queue(day, transactions))
         for day in self.days:
-            self.days_parsed[Parser.return_date(day)] = (Parser.parse_times(day),
-                                                         Parser.return_highest_date(day))
+            self.days_parsed[Parser.return_date(day)] = Parser.parse_times(day)
 
     @property
     def output(self) -> Tuple[List, Dict]:

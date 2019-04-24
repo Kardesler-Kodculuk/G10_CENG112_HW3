@@ -3,7 +3,7 @@ A group of functions that will ready the operating system to do the testing.
 """
 
 from os import system
-from platform import platform
+from platform import system as systemname
 
 
 def position_test_files(file_name: str) -> None:
@@ -24,4 +24,4 @@ def execute_java_code() -> None:
         "Windows": "|",
         "Linux": ">"
     }
-    system(f"cd ../bin && java Main {command_key[platform()]} output.txt")
+    system(f"cd ../bin && java Main {command_key[systemname()]} output.txt")
