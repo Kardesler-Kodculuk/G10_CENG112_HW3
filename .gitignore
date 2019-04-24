@@ -1,3 +1,4 @@
 *.class
 bin/
 integration_testing/venv/
+*.pyc
