@@ -1,6 +1,7 @@
 package simulation;
 
 public class Transaction {
+	private String date; // date of the transaction
 	private int id; // unique id in [1,1000]
 	private ICustomer customer; // the request owner
 	private int occupation; // needed time for transaction
@@ -10,14 +11,16 @@ public class Transaction {
 	/**
 	 * Creates a transaction node with next transaction
 	 * 
+	 * @param date
 	 * @param id
 	 * @param customer
 	 * @param occupation
 	 * @param waiting
 	 * @param next
 	 */
-	public Transaction(int id, ICustomer customer, int occupation, int waiting, Transaction next) {
-		super();
+	public Transaction(String date, int id, ICustomer customer, int occupation, int waiting, Transaction next) {
+//		super();
+		this.date = date;
 		this.id = id;
 		this.customer = customer;
 		this.occupation = occupation;
@@ -33,15 +36,15 @@ public class Transaction {
 	 * @param occupation
 	 * @param waiting
 	 */
-	public Transaction(int id, ICustomer customer, int occupation, int waiting) {
-		this(id, customer, occupation, waiting, null);
+	public Transaction(String date, int id, ICustomer customer, int occupation, int waiting) {
+		this(date, id, customer, occupation, waiting, null);
 	}
 
 	/**
 	 * Creates an empty Transaction node
 	 */
 	public Transaction() {
-		this(-1, null, -1, -1, null);
+		this(null, -1, null, -1, -1, null);
 	}
 
 	@Override
@@ -117,6 +120,14 @@ public class Transaction {
 	 */
 	public void setNext(Transaction next) {
 		this.next = next;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }
