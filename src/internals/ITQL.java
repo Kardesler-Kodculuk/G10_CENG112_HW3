@@ -1,28 +1,26 @@
 package internals;
 
-//TODO didnt start yet
-
-public interface IList<T> {
+public interface ITQL<T> {
 	
 	/**
-	 * adds new entry to the end of list
+	 * adds new TQ to the end of list
 	 * 
-	 * @param newEntry
+	 * @param newTQ
 	 */
-	public void add(T newEntry);
+	public void add(T newTQ);
 	/**
-	 * adds new entry to the given position
+	 * adds new TQ to the given position
 	 * 
 	 * @param givenPosition
-	 * @param newEntry
+	 * @param newTQ
 	 * @throws IndexOutOfBounds exception
 	 */
-	public void add(int givenPosition, T newEntry);
+	public void add(int givenPosition, T newTQ);
 	/**
-	 * removes an entry by the given position
+	 * removes an TQ by the given position
 	 * 
 	 * @param givenPosition
-	 * @return removed entry
+	 * @return removed TQ
 	 * @throws IndexOutOfBounds exception
 	 */
 	public T remove(int givenPosition);
@@ -31,20 +29,22 @@ public interface IList<T> {
 	 */
 	public void clear();
 	/**
-	 * replace an entry by its position with new entry
+	 * replace an TQ by its position with new TQ
 	 * 
 	 * @param givenPosition
-	 * @param newEntry
-	 * @return replaced entry
+	 * @param newTQ
+	 * @return replaced TQ
+	 * @throws IndexOutOfBounds exception
 	 */
-	public T replace(int givenPosition, T newEntry);
+	public T replace(int givenPosition, T newTQ);
 	/**
-	 * retrieves an entry by its position
+	 * retrieves an TQ by its position
 	 * 
 	 * @param givenPosition
-	 * @return an entry w.r.t. given position
+	 * @return an TQ w.r.t. given position
+	 * @throws IndexOutOfBounds exception
 	 */
-	public T getEntry(int givenPosition);
+	public T getTQ(int givenPosition);
 	/**
 	 * converts list to an array
 	 * 
@@ -52,12 +52,12 @@ public interface IList<T> {
 	 */
 	public T[] toArray();
 	/**
-	 * checks list contains the entry or not
+	 * checks list contains the TQ or not
 	 * 
-	 * @param anEntry
+	 * @param anTQ
 	 * @return true if contains, false if not
 	 */
-	public boolean contains(T anEntry);
+	public boolean contains(T anTQ);
 	/**
 	 * retrieves the length of the list
 	 * 
