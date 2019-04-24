@@ -13,7 +13,7 @@ import simulation.Transaction;
 public class Converter {
 
 	private static Transaction[] transactions;
-	
+
 	/**
 	 * @return the transactions
 	 */
@@ -84,7 +84,7 @@ public class Converter {
 			String customerType = splitLine[2];
 			ICustomer customer = null;
 			// determine the customer type
-			switch (customerType) { 
+			switch (customerType) {
 			case "NON-REGISTERED":
 				customer = new NonRegistered();
 				break;
