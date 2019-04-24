@@ -14,8 +14,8 @@ def read_transactions(file_name: str) -> List[str]:
     """
     with open(file_name) as file:
         data: str = file.read()
-    data = data.split("\n")
-    return data
+    data_list: List[str] = data.split("\n")
+    return data_list
 
 
 def split_days(lines: List[str]) -> Dict[str, List[Tuple]]:
@@ -42,11 +42,14 @@ def parse_transactions(days: Dict[str, List[Tuple[int, str, int]]]) -> Dict[str,
     :param days: Dictionary containing day-info pairs
     :return: Dictionary containing day-Transaction pairs.
     """
-    days = days.copy()
+    days_transaction = {}
     for day in days:
+        days_transaction[day] = []
+        waiting_time = 0
         for i, transaction in enumerate(days[day]):
-            days[day][i] = Transaction(transaction[0], transaction[1], transaction[2])
-    return days
+            days_transaction[day].append(Transaction(transaction[0], transaction[1], transaction[2], waiting_time))
+            waiting_time += transaction[2]
+    return days_transaction
 
 
 def create_queues(days: Dict[str, List[Transaction]]) -> List[TransactionQueue]:

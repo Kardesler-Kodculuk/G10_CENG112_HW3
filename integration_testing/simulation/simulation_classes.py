@@ -6,7 +6,7 @@ from typing import List
 
 
 class Transaction:
-    def __init__(self, id: int, type: int, occupation: int, waiting_time: int = 0):
+    def __init__(self, id: int, type: str, occupation: int, waiting_time: int = 0):
         type_converter = {
             "COR": "Corporate",
             "IND": "Individual",
