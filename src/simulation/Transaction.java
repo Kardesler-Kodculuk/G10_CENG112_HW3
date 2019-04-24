@@ -46,8 +46,7 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", customer=" + customer + ", occupation=" + occupation + ", waiting="
-				+ waiting + ", next=" + next + "]";
+		return String.valueOf(id) + "|" + customer.toString() + "|" + String.valueOf(occupation) + "|" + String.valueOf(waiting);
 	}
 
 	/**

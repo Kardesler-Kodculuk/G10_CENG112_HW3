@@ -19,11 +19,11 @@ class Parser:
     @staticmethod
     def return_arrow_value(string: str) -> str:
         """
-        Return the value part of a statement of form Key → Value
-        :param string: String containing →
+        Return the value part of a statement of form Key ← Value
+        :param string: String containing ←
         :return: Value
         """
-        keywords = string.split("→")
+        keywords = string.split("←")
         return keywords[1]
 
     @staticmethod
@@ -66,7 +66,7 @@ class Parser:
         :param second_part_report:
         :return: The date of the day
         """
-        return second_part_report.splitlines()[0].split("→")[0].split(" ")[-1]
+        return second_part_report.splitlines()[0].split("←")[0].split(" ")[-1]
 
     @staticmethod
     def convert_into_transaction_queue(date: str, transactions: List) -> TransactionQueue:
@@ -96,7 +96,7 @@ class Parser:
         :return: None.
         """
         for transaction in self.transaction_queue_log:
-            transaction_split = transaction.split("→")
+            transaction_split = transaction.split("←")
             day, transactions = transaction_split[0], transaction_split[1:]
             self.transaction_queues.append(Parser.convert_into_transaction_queue(day, transactions))
         for day in self.days:

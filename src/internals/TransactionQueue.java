@@ -133,5 +133,20 @@ public class TransactionQueue implements ITransactionQueue {
 	public void setDate(String Date) {
 		this.date = Date;
 	}
+	
+	@Override
+	public String toString() {
+		String str_repr = this.date + " COUNTER";
+		String seperator_char = "←";
+		String traversing_transaction_string;
+		Transaction traversing_transaction;
+		for (int i = 0; i < getSize(); i++) {
+			traversing_transaction = getElementAt(i);
+			traversing_transaction_string = traversing_transaction.toString();
+			str_repr += " " + seperator_char + " " + traversing_transaction_string;
+		}
+		return str_repr;
+		
+	}
 
 }

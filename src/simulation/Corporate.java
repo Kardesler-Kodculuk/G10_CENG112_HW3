@@ -22,7 +22,7 @@ public class Corporate implements ICustomer {
 	
 	@Override
 	public String toString() {
-		return (getType() + " | " + ((Integer) getPriority()).toString());
+		return "COR";
 	}
 
 }

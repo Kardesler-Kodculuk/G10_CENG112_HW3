@@ -44,8 +44,8 @@ def parse_transactions(days: Dict[str, List[Tuple[int, str, int]]]) -> Dict[str,
     """
     days = days.copy()
     for day in days:
-        for i, transaction in day:
-            day[i] = Transaction(transaction[0], transaction[1], transaction[2])
+        for i, transaction in enumerate(days[day]):
+            days[day][i] = Transaction(transaction[0], transaction[1], transaction[2])
     return days
 
 

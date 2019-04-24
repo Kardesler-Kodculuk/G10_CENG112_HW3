@@ -83,7 +83,7 @@ class TransactionQueue:
     def __eq__(self, other) -> bool:
         if type(self) != type(other):
             return False
-        elif len(self.queue) != len(self.other):
+        elif len(self.queue) != len(other.queue):
             return False
         else:
             for self_item, other_item in self.queue, other.queue:
