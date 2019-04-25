@@ -97,7 +97,7 @@ public class Converter {
 			}
 			int occupation = Integer.parseInt(splitLine[3]);
 			// sums the waiting time
-			if (i == 0 || transactions[i - 1].getDate() != date) { // TODO not sure about that
+			if (i == 0 || transactions[i - 1].getDate() != date) {
 				waiting = 0;
 			} else {
 				waiting += transactions[i - 1].getOccupation();

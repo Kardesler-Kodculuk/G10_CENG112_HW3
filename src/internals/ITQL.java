@@ -1,13 +1,14 @@
 package internals;
 
 public interface ITQL<T> {
-	
+
 	/**
 	 * adds new TQ to the end of list
 	 * 
 	 * @param newTQ
 	 */
 	public void add(T newTQ);
+
 	/**
 	 * adds new TQ to the given position
 	 * 
@@ -16,6 +17,7 @@ public interface ITQL<T> {
 	 * @throws IndexOutOfBounds exception
 	 */
 	public void add(int givenPosition, T newTQ);
+
 	/**
 	 * removes an TQ by the given position
 	 * 
@@ -24,10 +26,12 @@ public interface ITQL<T> {
 	 * @throws IndexOutOfBounds exception
 	 */
 	public T remove(int givenPosition);
+
 	/**
 	 * clears the list
 	 */
 	public void clear();
+
 	/**
 	 * replace an TQ by its position with new TQ
 	 * 
@@ -37,6 +41,7 @@ public interface ITQL<T> {
 	 * @throws IndexOutOfBounds exception
 	 */
 	public T replace(int givenPosition, T newTQ);
+
 	/**
 	 * retrieves an TQ by its position
 	 * 
@@ -45,12 +50,14 @@ public interface ITQL<T> {
 	 * @throws IndexOutOfBounds exception
 	 */
 	public T getTQ(int givenPosition);
+
 	/**
 	 * converts list to an array
 	 * 
 	 * @return an array type of T
 	 */
 	public T[] toArray();
+
 	/**
 	 * checks list contains the TQ or not
 	 * 
@@ -58,17 +65,19 @@ public interface ITQL<T> {
 	 * @return true if contains, false if not
 	 */
 	public boolean contains(T anTQ);
+
 	/**
 	 * retrieves the length of the list
 	 * 
 	 * @return length of the list type of T
 	 */
 	public int getLength();
+
 	/**
 	 * checks the list is empty or not
 	 * 
 	 * @return true if empty, false if not
 	 */
 	public boolean isEmpty();
-	
+
 }
