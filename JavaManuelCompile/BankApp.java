@@ -3,7 +3,7 @@ import java.io.IOException;
 import internals.*;
 import utility.*;
 
-public class Main {
+public class BankApp {
 
 	/**
 	 * Determine the count of days.
