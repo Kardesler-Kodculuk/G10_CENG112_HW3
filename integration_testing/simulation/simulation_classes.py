@@ -27,6 +27,10 @@ class Transaction:
         self.priority: int = priority_determinator[self.type]
         self.waiting_time = waiting_time
 
+    def __repr__(self):
+        reverse_type = {"Corporate":"COR", "Individual":"IND", "Non-Registered":"NON"}
+        return f"{self.id}|{reverse_type[self.type]}|{self.occupation}|{self.waiting_time}"
+
     def __eq__(self, other):
         if self.type != other.type:
             return False
@@ -65,6 +69,17 @@ class TransactionQueue:
         """
         return (transaction.priority, transaction.id)
 
+    def recalculate_waiting_times(self) -> None:
+        """
+        Recalculate the waiting times after adjusting
+        :return: None.
+        """
+        for i in range(len(self.queue)):
+            if i == 0:
+                self.queue[0].waiting_time = 0
+                continue
+            self.queue[i].waiting_time = self.queue[i - 1].waiting_time + self.queue[i - 1].occupation
+
     def insert(self, new_transaction: Transaction) -> None:
         """
         Insert a new element into the priority queue.
@@ -74,6 +89,7 @@ class TransactionQueue:
         self.queue.append(new_transaction)
         self.queue.sort(key=self.sort_key)
         self.total_waiting_time += new_transaction.occupation
+        self.recalculate_waiting_times()
 
     def remove(self) -> Transaction:
         """
@@ -92,4 +108,10 @@ class TransactionQueue:
                 if self_item != other_item:
                     return False
         return True
+
+    def __repr__(self):
+        str_repr =  f"{self.day} COUNTER"
+        for transaction in self.queue:
+            str_repr += f" ← {transaction}"
+        return str_repr
 

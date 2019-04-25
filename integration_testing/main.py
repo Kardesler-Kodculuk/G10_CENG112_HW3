@@ -88,6 +88,7 @@ class Main:
         :return: number of the line error ocured or none.
         """
         transaction_queues: List[TransactionQueue] = self.parsed_output[0]
+        print(self.parsed_output)
         for i in range(len(self.transactions)):
             if self.transactions[i] != transaction_queues[i]:
                 return i

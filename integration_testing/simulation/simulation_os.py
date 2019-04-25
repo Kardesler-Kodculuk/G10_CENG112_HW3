@@ -32,4 +32,4 @@ def execute_java_code() -> None:
         "Windows": "|",
         "Linux": ">"
     }
-    system(f"cd ../bin && java Main {command_key[systemname()]} output.txt")
+    system(f"cd ../bin && java BankApp {command_key[systemname()]} output.txt")
