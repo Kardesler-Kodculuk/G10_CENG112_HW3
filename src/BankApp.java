@@ -148,13 +148,13 @@ public class BankApp {
 	private static void unravelTQL(TQL transactionQueueList) {
 		TransactionQueue currentTQ;
 		String maximum_day = "";
-		int maximum_workload = 0; 
+		float maximum_workload = 0; 
 		for (int i = 1; i <= transactionQueueList.getLength(); i++) {
 			currentTQ = transactionQueueList.getTQ(i);
 			String[] stats = unravelTQ(currentTQ);
-			if (maximum_workload <= Integer.parseInt(stats[0])) {
+			if (maximum_workload <= Float.parseFloat(stats[1])) {
 				maximum_day = currentTQ.getDate();
-				maximum_workload = Integer.parseInt(stats[0]);
+				maximum_workload = Float.parseFloat(stats[1]);
 			}
 			stats[12] = maximum_day;
 			printPeriodicOutput(currentTQ.getDate(), stats);
