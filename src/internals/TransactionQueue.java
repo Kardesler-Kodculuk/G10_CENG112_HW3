@@ -19,6 +19,9 @@ public class TransactionQueue implements ITransactionQueue {
 		next = null;
 	}
 
+	/**
+	 * Update the waiting times when an insertion occurs.
+	 */
 	private void shiftWaitingTimes() {
 		if (head != null && head.getNext() != null) {
 			Transaction traversing_transaction = head.getNext();

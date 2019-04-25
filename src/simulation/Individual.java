@@ -1,12 +1,12 @@
 package simulation;
 
 public class Individual implements ICustomer {
-	private static String type = "Individual";
-	private static int priority = 2;
-	private boolean initilised;
+	private static String type;
+	private static int priority;
 	
 	public Individual() {
-		initilised = true;
+		type = "Individual";
+		priority = 2;
 	}
 	
 	@Override

@@ -1,12 +1,13 @@
 package simulation;
 
 public class NonRegistered implements ICustomer {
-	private static String type = "Non-Registered";
-	private static int priority = 3;
-	private boolean initilised;
+	private static String type;
+	private static int priority;
 	
 	public NonRegistered() {
-		initilised = true;
+		type = "Non-Registered";
+		priority = 3;
+		
 	}
 	
 	@Override
