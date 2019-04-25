@@ -62,6 +62,8 @@ public class TransactionQueue implements ITransactionQueue {
 		int ThisPriority = ThisCustomer.getPriority();
 		if (head == null) {
 			insertAt = 0;
+		} else if (ThisPriority < head.getCustomer().getPriority()) {
+			insertAt = 0;
 		} else {
 			insertAt = 0;
 			for (int i = 0; i <= this.queueLength; i++) {
@@ -140,11 +142,11 @@ public class TransactionQueue implements ITransactionQueue {
 		String str_repr = this.date + " COUNTER";
 		String seperator_char = "←";
 		String traversing_transaction_string;
-		Transaction traversing_transaction;
-		for (int i = 0; i < getSize(); i++) {
-			traversing_transaction = getElementAt(i);
+		Transaction traversing_transaction = head;
+		for (int i = 0; i < queueLength; i++) {
 			traversing_transaction_string = traversing_transaction.toString();
 			str_repr += " " + seperator_char + " " + traversing_transaction_string;
+			traversing_transaction = traversing_transaction.getNext();
 		}
 		return str_repr;
 		
