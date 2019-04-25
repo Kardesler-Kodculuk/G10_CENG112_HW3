@@ -1,5 +1,8 @@
 import simulation.*;
 import java.io.IOException;
+
+import javax.annotation.Generated;
+
 import internals.*;
 import utility.*;
 
@@ -65,6 +68,98 @@ public class BankApp {
 		}
 	}
 
+	/**
+	 * Updates the stats according to transaction.
+	 * @param stats Stats array
+	 * @param transaction Current transaction.
+	 */
+	private static void updateStats(String[] stats, Transaction transaction) {
+		stats[0] = String.valueOf(Integer.parseInt(stats[0]) + 1);
+		stats[1] = String.valueOf(Integer.valueOf(stats[1]) + transaction.getWaiting());
+		String typeof = transaction.getCustomer().getType();
+		switch (typeof) {
+		case "Corporate":
+			stats[3] = String.valueOf(Integer.parseInt(stats[3]) + 1);
+			stats[4] = String.valueOf(Integer.valueOf(stats[4]) + transaction.getWaiting());
+			break;
+		case "Individual":
+			stats[6] = String.valueOf(Integer.parseInt(stats[6]) + 1);
+			stats[7] = String.valueOf(Integer.valueOf(stats[7]) + transaction.getWaiting());
+			break;
+		case "Non-Registered":
+			stats[9] = String.valueOf(Integer.parseInt(stats[9]) + 1);
+			stats[10] = String.valueOf(Integer.valueOf(stats[10]) + transaction.getWaiting());
+			break;
+		default:
+			System.err.println("Error occured, type undetermined.");
+			break;
+		}
+	}
+	
+	private static void finaliseStats(String[] stats) {
+		int[] indices = {2, 5, 8, 11};
+		for (int index : indices) {
+			try {
+				stats[index] = ((Float) (Float.valueOf(stats[index - 1]) / Float.valueOf(stats[index - 2]))).toString();
+			} catch (ArithmeticException e) {
+				continue;
+			}
+		}
+	}
+
+	private static String[] unravelTQ(TransactionQueue transactionQueue) {
+		String[] stats = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
+		Transaction current_transaction;
+		for (int i = 0; i < transactionQueue.getSize(); i++) {
+			current_transaction = transactionQueue.remove();
+			updateStats(stats, current_transaction);
+		}
+		finaliseStats(stats);
+		return stats;
+	}
+	
+	private static void printPeriodicOutput(String date, String[] stats) {
+		String template = "\nTotal transaction count in " + date + " → %s \n" +
+						  "Total waiting time in " + date + " → %s \n" +
+						  "Average waiting time in " + date + " →  %s \n" +
+						  "Total transaction count for CORPORATE customer in " + date +
+						  " → %s \n" +
+						  "Total waiting time for CORPORATE customer in " + date +
+						  " → %s \n" +
+						  "Average waiting time for CORPORATE customer in " + date +
+						  " → %s \n" +
+						  "Total transaction count for INDIVIDUAL customer in " + date +
+						  " → %s \n" +
+						  "Total waiting time for INDIVIDUAL customer in " + date +
+						  " → %s \n" +
+						  "Average waiting time for INDIVIDUAL customer in " + date +
+						  " → %s \n" +
+						  "Total transaction count for NON-REGISTERED customer in " + date +
+						  " → %s \n" +
+						  "Total waiting time for NON-REGISTERED customer in " + date +
+						  " → %s \n" +
+						  "Average waiting time for NON-REGISTERED customer in " + date +
+						  " → %s \n" +
+						  "The date with highest workload (max total waiting time) → %s \n";
+		String output = String.format(template, (Object[]) stats);
+		System.out.println(output);
+	}
+
+	private static void unravelTQL(TQL transactionQueueList) {
+		TransactionQueue currentTQ;
+		String maximum_day = "";
+		int maximum_workload = 0; 
+		for (int i = 1; i <= transactionQueueList.getLength(); i++) {
+			currentTQ = transactionQueueList.getTQ(i);
+			String[] stats = unravelTQ(currentTQ);
+			if (maximum_workload <= Integer.parseInt(stats[0])) {
+				maximum_day = currentTQ.getDate();
+				maximum_workload = Integer.parseInt(stats[0]);
+			}
+			stats[12] = maximum_day;
+			printPeriodicOutput(currentTQ.getDate(), stats);
+		}
+	}
 	public static void main(String[] args) {
 		
 		TQL transactionQueueList = new TQL();
@@ -87,6 +182,7 @@ public class BankApp {
 		}
 
 		System.out.println(transactionQueueList);
+		unravelTQL(transactionQueueList);
 
 	}
 
