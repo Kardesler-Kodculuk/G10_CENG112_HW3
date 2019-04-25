@@ -43,6 +43,7 @@ public class TQL implements ITQL<TransactionQueue> {
 		}
 		else {
 			TransactionQueue last = head;
+			// loop searchs for last node
 			while(last.getNextTransactionQueue() != null) {
 				last = (TransactionQueue) last.getNextTransactionQueue();
 			}
@@ -52,6 +53,7 @@ public class TQL implements ITQL<TransactionQueue> {
 		
 	}
 	
+	// TODO delete this
 //	private void createRoom(int givenPosition) {
 //		int iterationTime = givenPosition;
 //		TransactionQueue last = this.getHead();
@@ -70,8 +72,9 @@ public class TQL implements ITQL<TransactionQueue> {
 	public void add(int givenPosition, TransactionQueue newTQ) {
 		int iterationTime = this.getListLength();
 		TransactionQueue last = this.getHead();
+		// loop searchs for given position
 		for(int i = 0; i < iterationTime; i++) {
-			if (i + 1 == givenPosition) {
+			if (i + 1 == givenPosition) { // when we are on the given position
 				TransactionQueue tempNext = (TransactionQueue) last.getNextTransactionQueue();
 				last.setNextTransactionQueue(newTQ);
 				last = (TransactionQueue) last.getNextTransactionQueue();
@@ -85,15 +88,18 @@ public class TQL implements ITQL<TransactionQueue> {
 	}
 	@Override
 	public TransactionQueue remove(int givenPosition) {
+		// if given position is points the head
 		if (givenPosition == 1) {
 			TransactionQueue removedTQ = this.getHead();
 			this.setHead((TransactionQueue) this.head.getNextTransactionQueue());
 			this.listLength--;
 			return removedTQ;
 		}
+		// if given position is points the last
 		else if (givenPosition == this.getListLength()) {
 			TransactionQueue beforeLast = head;
 			TransactionQueue last = null;
+			// loop searches for last position
 			while(last.getNextTransactionQueue() != null) {
 				beforeLast = (TransactionQueue) beforeLast.getNextTransactionQueue();
 				last = (TransactionQueue) beforeLast.getNextTransactionQueue();
@@ -102,9 +108,11 @@ public class TQL implements ITQL<TransactionQueue> {
 			this.listLength--;
 			return last;
 		}
+		// if given position is between head and last
 		else {
 			int iterationTime = givenPosition - 2;
 			TransactionQueue beforeRemoved = this.getHead();
+			// loop searches by given position
 			for (int i = 0; i < iterationTime; i++) {
 				beforeRemoved = (TransactionQueue) beforeRemoved.getNextTransactionQueue();
 			}
@@ -129,6 +137,7 @@ public class TQL implements ITQL<TransactionQueue> {
 	public TransactionQueue getTQ(int givenPosition) {
 		int iterationTime = givenPosition - 1;
 		TransactionQueue wantedTQ = this.getHead();
+		// loop searches for given position
 		for (int i = 0; i < iterationTime; i++) {
 			wantedTQ = (TransactionQueue) wantedTQ.getNextTransactionQueue();
 		}
@@ -139,6 +148,7 @@ public class TQL implements ITQL<TransactionQueue> {
 		TransactionQueue[] wantedArray = (TransactionQueue[]) new Object[this.getListLength()];
 		int iterationTime = this.getListLength();
 		TransactionQueue anyTQ = this.getHead();
+		// loop for each TransactionQueue in the list
 		for (int i = 0; i < iterationTime; i++) {
 			wantedArray[i] = anyTQ;
 			anyTQ = (TransactionQueue) anyTQ.getNextTransactionQueue();
@@ -148,16 +158,20 @@ public class TQL implements ITQL<TransactionQueue> {
 	@Override
 	public boolean contains(TransactionQueue anTQ) {
 		TransactionQueue anyTQ = this.getHead();
+		// loop for searching the list to find if it is contains the TQ
+		// loop iterates until found the TQ
 		while(!anTQ.equals(anyTQ)) {
+			// if searching completed and not found
 			if (anyTQ == null) {
 				return false;
 			}
+			// not found but there is more TQ to check
 			else {
 				anyTQ = (TransactionQueue) anyTQ.getNextTransactionQueue();
 			}
 
 		}
-		return true;
+		return true; // searching not completed but TQ found
 	}
 	@Override
 	public int getLength() {
