@@ -91,7 +91,7 @@ class Main:
         for i in range(len(self.transactions)):
             if self.transactions[i] != transaction_queues[i]:
                 return i
-        return -1
+        return 1
 
     def test(self) -> str:
         self.ready()

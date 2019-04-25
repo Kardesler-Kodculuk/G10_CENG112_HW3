@@ -47,7 +47,7 @@ public class TransactionQueue implements ITransactionQueue {
 			this.head = T;
 		} else {
 			Transaction priorElement = getElementAt(index - 1);
-			Transaction postElement = getElementAt(index + 1);
+			Transaction postElement = getElementAt(index);
 			T.setNext(postElement);
 			priorElement.setNext(T);
 		}
