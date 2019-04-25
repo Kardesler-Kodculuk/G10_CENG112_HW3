@@ -1,12 +1,12 @@
 package simulation;
 
 public class Corporate implements ICustomer {
-	private static String type = "Corporate";
-	private static int priority = 1;
-	private boolean initilised;
+	private static String type;
+	private static int priority;
 	
 	public Corporate() {
-		initilised = true;
+		type = "Corporate";
+		priority = 1;
 	}
 	
 	@Override

@@ -1,8 +1,5 @@
 import simulation.*;
 import java.io.IOException;
-
-import javax.annotation.Generated;
-
 import internals.*;
 import utility.*;
 
@@ -96,6 +93,10 @@ public class BankApp {
 		}
 	}
 	
+	/**
+	 * Calculate the avarages of the stats
+	 * @param stats Stats from which the avarages will be calculated.
+	 */
 	private static void finaliseStats(String[] stats) {
 		int[] indices = {2, 5, 8, 11};
 		for (int index : indices) {
@@ -107,6 +108,11 @@ public class BankApp {
 		}
 	}
 
+	/**
+	 * Iteratively dequeue transactions one by one, while keeping statistics.
+	 * @param transactionQueue Current transaction queue.
+	 * @return Statistics generated for the day.
+	 */
 	private static String[] unravelTQ(TransactionQueue transactionQueue) {
 		String[] stats = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
 		Transaction current_transaction;
@@ -118,6 +124,11 @@ public class BankApp {
 		return stats;
 	}
 	
+	/**
+	 * Print the daily report.
+	 * @param date Date of which the daily report will be produced for
+	 * @param stats Statistics from which it will be produced.
+	 */
 	private static void printPeriodicOutput(String date, String[] stats) {
 		String template = "\nTotal transaction count in " + date + " → %s \n" +
 						  "Total waiting time in " + date + " → %s \n" +
@@ -145,6 +156,10 @@ public class BankApp {
 		System.out.println(output);
 	}
 
+	/**
+	 * Unravel the tql, taking the transaction queues out one by one.
+	 * @param transactionQueueList
+	 */
 	private static void unravelTQL(TQL transactionQueueList) {
 		TransactionQueue currentTQ;
 		String maximum_day = "";
@@ -160,6 +175,7 @@ public class BankApp {
 			printPeriodicOutput(currentTQ.getDate(), stats);
 		}
 	}
+
 	public static void main(String[] args) {
 		
 		TQL transactionQueueList = new TQL();
