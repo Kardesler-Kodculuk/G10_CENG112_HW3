@@ -144,6 +144,9 @@ public class TransactionQueue implements ITransactionQueue {
 		String traversing_transaction_string;
 		Transaction traversing_transaction = head;
 		for (int i = 0; i < queueLength; i++) {
+			if (traversing_transaction == null) {
+				break;
+			} 
 			traversing_transaction_string = traversing_transaction.toString();
 			str_repr += " " + seperator_char + " " + traversing_transaction_string;
 			traversing_transaction = traversing_transaction.getNext();
