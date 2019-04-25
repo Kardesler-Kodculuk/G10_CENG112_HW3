@@ -48,9 +48,10 @@ public class TransactionQueue implements ITransactionQueue {
 		} else {
 			Transaction priorElement = getElementAt(index - 1);
 			Transaction postElement = getElementAt(index + 1);
-			head.setNext(postElement);
+			T.setNext(postElement);
 			priorElement.setNext(T);
 		}
+		this.queueLength++;
 		this.totalWaitingTime += T.getWaiting();
 	}
 
@@ -66,12 +67,12 @@ public class TransactionQueue implements ITransactionQueue {
 			for (int i = 0; i <= this.queueLength; i++) {
 				Transaction nextTransaction = getElementAt(i + 1);
 				if (nextTransaction == null) {
-					insertAt = i;
+					insertAt = i + 1;
 					break;
 				} else {
 					ICustomer nextCustomer = nextTransaction.getCustomer();
 					if (nextCustomer.getPriority() > ThisPriority) {
-						insertAt = i;
+						insertAt = i + 1;
 						break;
 					}
 				}

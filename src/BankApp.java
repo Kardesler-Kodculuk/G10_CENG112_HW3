@@ -34,6 +34,7 @@ public class BankApp {
 			if (!transaction.getDate().equals(current_date)) {
 				current_date = transaction.getDate();
 				dates[i] = current_date;
+				i++;
 			}
 		}
 	}
@@ -84,11 +85,7 @@ public class BankApp {
 		for (TransactionQueue transactionQueue: transactionQueues) {
 			transactionQueueList.add(transactionQueue);
 		}
-		
-		transactionQueues = null;
-		transactions = null;
-		dates = null;
-		
+
 		System.out.println(transactionQueueList);
 
 	}

@@ -192,6 +192,7 @@ public class TQL implements ITQL<TransactionQueue> {
 		String outputString = "";
 		for (int i = 0; i < listLength; i++) {
 			outputString += traversingNodeSubtype.toString() + "\n";
+			traversingNodeSubtype = (TransactionQueue) traversingNodeSubtype.getNextTransactionQueue();
 		}
 		return outputString;
 	}
