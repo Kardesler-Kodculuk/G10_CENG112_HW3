@@ -19,6 +19,18 @@ public class TransactionQueue implements ITransactionQueue {
 		next = null;
 	}
 
+	private void shiftWaitingTimes() {
+		if (head != null && head.getNext() != null) {
+			Transaction traversing_transaction = head.getNext();
+			Transaction prior_transaction = head;
+			for (int i = 1; i < queueLength; i++) {
+				traversing_transaction.setWaiting(prior_transaction.getWaiting() + prior_transaction.getOccupation());
+				prior_transaction = traversing_transaction;
+				traversing_transaction = traversing_transaction.getNext();
+			}
+		}
+	}
+	
 	/**
 	 * Return the transaction object at a certain index.
 	 * @param index
@@ -53,6 +65,7 @@ public class TransactionQueue implements ITransactionQueue {
 		}
 		this.queueLength++;
 		this.totalWaitingTime += T.getWaiting();
+		shiftWaitingTimes();
 	}
 
 	@Override
