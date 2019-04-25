@@ -97,13 +97,13 @@ public class Converter {
 			}
 			int occupation = Integer.parseInt(splitLine[3]);
 			// sums the waiting time
-			if (i == 0 || transactions[i - 1].getDate() != transactions[i].getDate()) { // TODO not sure about that
+			if (i == 0 || transactions[i - 1].getDate() != date) { // TODO not sure about that
 				waiting = 0;
 			} else {
 				waiting += transactions[i - 1].getOccupation();
 			}
 			// bind the transaction nodes
-			if (i < lineCount) {
+			if (0 < i && i < lineCount) {
 				transactions[i - 1].setNext(transactions[i]);
 			}
 			transactions[i] = new Transaction(date, id, customer, occupation, waiting);
