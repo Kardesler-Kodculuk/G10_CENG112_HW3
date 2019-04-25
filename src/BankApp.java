@@ -110,7 +110,7 @@ public class BankApp {
 	private static String[] unravelTQ(TransactionQueue transactionQueue) {
 		String[] stats = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
 		Transaction current_transaction;
-		for (int i = 0; i < transactionQueue.getSize(); i++) {
+		while (!transactionQueue.isEmpty()) {
 			current_transaction = transactionQueue.remove();
 			updateStats(stats, current_transaction);
 		}
