@@ -88,6 +88,8 @@ public class Main {
 		transactionQueues = null;
 		transactions = null;
 		dates = null;
+		
+		System.out.println(transactionQueueList);
 
 	}
 
